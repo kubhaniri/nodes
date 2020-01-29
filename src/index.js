@@ -1,11 +1,7 @@
 const express = require('express');
-/*
-var module_http= require('http');
-var module_fs= require('fs');
-var module_url= require('url');
-var module_querystring= require('querystring'); */
-const { info, err } = require('./module/mymod.js');
+
 const { countries, languages } = require('countries-list');
+const { info } = require('./module/mymod.js');
 
 const app = express();
 app.get('/', (request, response) => {
@@ -17,15 +13,22 @@ app.get('/info', (request, response) => {
 });
 
 app.get('/country', (request, response) => {
-  console.log('request.query :', request.query);
+  //console.log('request.query :', request.query);
   response.json(countries[request.query.code]);
   //response.send(JSON.stringify(countries[request.query.code]));
 });
 
-app.get('/languages/:lang', (request, response) => {
-  console.log('request.params  ', request.params);
-  response.json(languages[request.params.lang]);
-  //response.send(JSON.stringify(countries[request.query.code]));
+app.get('/languages/:lang/:gh', (request, response) => {
+  //console.log('request.params  ', request.params);
+  const lang = languages[request.params.lang];
+  if (lang) {
+    response.json({ status: 'OK', message: lang });
+  } else {
+    response.status(404).json({
+      status: 'NOT_FOUND',
+      message: `language${request.params.lang}not found`
+    });
+  }
 });
 
 app.get('*', (request, response) => {
