@@ -1,10 +1,25 @@
+const express = require('express');
+/*
 var module_http= require('http');
 var module_fs= require('fs');
 var module_url= require('url');
-var module_querystring= require('querystring');
-var mymod = require('./module/mymod.js')
-var {countries} = require('countries-list')
+var module_querystring= require('querystring');*/
+const mymod = require('./module/mymod.js')
+const {countries} = require('countries-list')
 
+const app = express();
+app.get('/', function(require, response){
+    response.status('200').send("Firmin Est Present");
+});
+
+app.get('/info', function(request,response){
+    response.send(mymod.info0("Firmin's Info"));
+});
+
+app.get('*', function(request, response){
+    response.status('404').send("Firmin Est En Mode Invisible");
+});
+/*
 
 var server = module_http.createServer(function(request, response){
 
@@ -41,7 +56,9 @@ var server = module_http.createServer(function(request, response){
 response.end();
 });
 
+*/
 
-
-server.listen(4000);
-console.log("Running on Port:4000");
+app.listen(4000, function(){
+    console.log("Running on Port:4000");
+}
+);
