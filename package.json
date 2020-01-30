@@ -15,6 +15,7 @@
     "server"
   ],
   "dependencies": {
+    "body-parser": "^1.19.0",
     "countries-list": "^2.5.0",
     "express": "^4.17.1"
   },
