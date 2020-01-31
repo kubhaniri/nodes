@@ -1,7 +1,6 @@
 const userModel = require('../../mongo/models/users');
 const createUser = async (req, res) => {
   try {
-    console.log('req.body', req.body);
 
     const { username, email, password, data } = req.body;
 
@@ -21,7 +20,7 @@ const createUser = async (req, res) => {
       return;
     }
     console.log('User creation Error: ', error);
-    res.status(500).send({ status: 'ERROR', message: "Unkwon" });
+    res.status(500).send({ status: 'ERROR', message: 'Unkwon' });
   }
 };
 
