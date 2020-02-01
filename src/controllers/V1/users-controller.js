@@ -1,12 +1,20 @@
+const jwt = require('jsonwebtoken');
+
 const userModel = require('../../mongo/models/users');
 
+const expiresIn = 60 * 60;
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await userModel.findOne({ email });
     if (user) {
       if (password === user.password) {
-        res.send({ status: 'OK', data: {} });
+        const token = jwt.sign(
+          { userId: user._id, role: user.role },
+          process.env.JWT_SECRET,
+          { expiresIn }
+        );
+        res.send({ status: 'OK', data: { token, expiresIn } });
       } else {
         res.send({ status: 'INVALID_PASSWORD', message: '' });
       }
